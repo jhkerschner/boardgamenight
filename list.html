@@ -1,0 +1,23 @@
+<input type="text" ng-model="search" class="form-control" placeholder="Search">
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Bio</th>
+    <th>Age</th>
+    <th>email</th>
+    <th><a href="#/new"><i class="glyphicon glyphicon-plus"></i></a></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="item in items | orderByPriority | filter:search | orderBy:'name'">
+    <td>{{item.name}}</td>
+    <td>{{item.description}}</td>
+    <td>{{item.number}}</td>
+    <td>{{item.email}}</td>
+    <td>
+      <a href="#/edit/{{item.$id}}"><i class="glyphicon glyphicon-pencil"></i></a>
+    </td>
+  </tr>
+  </tbody>
+</table>

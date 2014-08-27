@@ -1,0 +1,43 @@
+<form name="myForm">
+  <!-- When using name attributes in combination with directives you can quickly do form validation without writing any special javascript -->
+  Is the form valid yet? {{myForm.$invalid ? "no" : "yes"}}
+  <div class="control-group" >
+    <label>Name</label>
+    <input type="text" name="name" class="form-control" 
+      ng-class="{error: myForm.name.$invalid && !myForm.name.$pristine}" 
+      ng-model="item.name" 
+      required >
+    <span ng-show="myForm.name.$error.required && !myForm.name.$pristine" class="text-danger">
+        Required</span>
+  </div>
+ 
+  <div class="control-group" >
+    <label>What is your age? {{myform.$error}}</label>
+    <input type="number" name="number" class="form-control" 
+      ng-class="{error: myForm.number.$error.number && !myForm.number.$pristine}" 
+      ng-model="item.number" 
+      number>
+    <!-- <span ng-show="myForm.number.$error.required && !myForm.number.$pristine" class="text-danger">
+        Required</span> -->
+    <span ng-show="myForm.number.$error.number" class="text-danger">
+        Not a Number</span>
+  </div>
+
+  <div class="control-group" >
+    <label>Email??!</label>
+    <input type="email" name="email" class="form-control" 
+      ng-class="{error: myForm.email.$invalid && !myForm.email.$pristine}"
+      ng-model="item.email">
+    <span ng-show="myForm.email.$error.email && !myForm.email.$pristine" class="text-danger">
+        That doesn't appear to be a valid email</span>
+
+  </div>
+ 
+  <label>Bio</label>
+  <textarea name="description" class="form-control" ng-model="item.description"></textarea>
+ 
+  <br>
+  <a href="#/" class="btn btn-default">Cancel</a>
+  <button ng-click="save()" ng-disabled="myForm.$invalid" class="btn btn-primary">Save</button>
+  <button ng-click="destroy()" ng-show="item.$remove" class="btn btn-danger">Delete</button>
+</form>

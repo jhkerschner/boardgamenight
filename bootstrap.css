@@ -1,0 +1,20 @@
+@import '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css';
+
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.main{
+  padding-top: 80px;
+}
+.carousel-inner{
+  height:305px;
+  background-color: #000;
+}
+.carousel-inner > .item{
+  height:305px;
+}
+.slideshow-form{
+  padding-top: 30px;
+}
+input.error{
+  border-color:red;
+}

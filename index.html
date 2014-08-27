@@ -1,0 +1,71 @@
+<!doctype html>
+<html ng-app="item">
+  <head>
+    <script src="angular.min.js"></script>
+    <script src="angular-resource.min.js">
+    </script>
+    <script src="angular-route.min.js">
+   </script>
+    <script src="https://cdn.firebase.com/js/client/1.0.5/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/0.7.0/angularfire.min.js"></script>
+    <script src="ui-bootstrap-tpls-0.11.0.js"></script>
+
+    <link rel="stylesheet" href="bootstrap.css">
+    <script src="item.js"></script>
+  </head>
+  <body>
+  <div class="container main">
+    <div class="row">
+      <div class="col-md-4">
+        <h2>User Listing</h2>
+        <div ng-view></div>
+      </div>
+      <div class="col-md-6 col-md-offset-2">
+        <div ng-controller="CarouselDemoCtrl as carousel">
+          <div style="height: 305px">
+            <carousel interval="myInterval">
+              <slide ng-repeat="slide in slides" active="slide.active">
+                <img ng-src="{{slide.image}}" style="margin:auto;">
+                <div class="carousel-caption">
+                  <h4>Slide {{$index + 1}}</h4>
+                  <p>{{slide.text}}</p>
+                </div>
+              </slide>
+            </carousel>
+          </div>
+          <div class="row slideshow-form">
+            <div class="col-md-6">
+              New Topic:
+              <input type="text" class="form-control" ng-model="mySearch"><br>
+              <button type="button" class="btn btn-info" ng-click="changeTopic()">Change Topic</button>
+              <p class="text-danger" ng-model="noResults">{{noResults}}</p>
+              <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
+              <p class="text-danger" ng-model="noneMore">{{noneMore}}</p>
+             
+            </div>
+            <div class="col-md-6">
+              Interval, in milliseconds: <input type="number" class="form-control" ng-model="myInterval">
+              <br />Enter a negative number to stop the interval.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="lg-col-6" ng-app="myApp">
+        <h1>Magical Message Reversal</h1>
+        <div ng-controller="FirstCtrl">
+          <input type="text" ng-model="data.message">
+        </div>
+        
+
+        <div ng-controller="SecondCtrl">
+          <h2>{{data.message}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  </body>
+</html>
