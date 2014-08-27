@@ -1,12 +1,12 @@
-var app = angular.module('item', ['ngRoute', 'firebase', 'ui.bootstrap']);
+angular.module('item', ['ngRoute', 'firebase'])
  
-app.value('fbURL', 'https://boardgamenight.firebaseio.com/');
+.value('fbURL', 'https://boardgamenight.firebaseio.com/')
  
-app.factory('Items', function($firebase, fbURL) {
-  return $firebase(new Firebase(fbURL));
-});
+.factory('Items', function($firebase, fbURL) {
+  return $firebase(new Firebase(fbURL)).$asArray();
+})
  
-app.config(function($routeProvider) {
+.config(function($routeProvider) {
   $routeProvider
     .when('/', {
       controller:'ListCtrl',
@@ -23,55 +23,38 @@ app.config(function($routeProvider) {
     .otherwise({
       redirectTo:'/'
     });
-});
+})
 
-app.controller('ListCtrl', function($scope, Items) {
+.controller('ListCtrl', function($scope, Items) {
   $scope.items = Items;
-});
+})
  
-app.controller('CreateCtrl', function($scope, $location, $timeout, Items) {
+.controller('CreateCtrl', function($scope, $location, $timeout, Items) {
   $scope.save = function() {
-    Items.$add($scope.item, function() {
-      $timeout(function() { $location.path('/'); });
+    Items.$add($scope.item).then(function(data) {
+      $location.path('/');
     });
   };
-});
- 
-app.controller('EditCtrl', function($scope, $location, $routeParams, $firebase, fbURL) {
-    var itemUrl = fbURL + $routeParams.itemId;
-    $scope.item = $firebase(new Firebase(itemUrl));
- 
+})
+
+.controller('EditCtrl',
+  function($scope, $location, $routeParams, Items) {
+    var itemId = $routeParams.itemId,
+        itemIndex;
+
+    $scope.items = Items;
+    itemIndex = $scope.items.$indexFor(itemId);
+    $scope.item = $scope.items[itemIndex];
+
     $scope.destroy = function() {
-      $scope.item.$remove();
-      $location.path('/');
+        $scope.items.$remove($scope.item).then(function(data) {
+            $location.path('/');
+        });
     };
- 
+
     $scope.save = function() {
-      $scope.item.$save();
-      $location.path('/');
+        $scope.items.$save($scope.item).then(function(data) {
+           $location.path('/');
+        });
     };
-});
-
-
-//Custom Form Validation
-
-var NUMBER_REGEXP = /^\d+$/;
-
-app.directive('number', function() {
-  return {
-    require: 'ngModel',
-    link: function(scope, elm, attrs, ctrl) {
-      ctrl.$parsers.unshift(function(viewValue) {
-        if (NUMBER_REGEXP.test(viewValue)) {
-          // it is valid
-          ctrl.$setValidity('number', true);
-          return viewValue;
-        } else {
-          // it is invalid, return undefined (no model update)
-          ctrl.$setValidity('number', false);
-          return undefined;
-        }
-      });
-    }
-  };
 });

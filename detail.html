@@ -10,18 +10,6 @@
     <span ng-show="myForm.name.$error.required && !myForm.name.$pristine" class="text-danger">
         Required</span>
   </div>
- 
-  <div class="control-group" >
-    <label>What is your age? {{myform.$error}}</label>
-    <input type="number" name="number" class="form-control" 
-      ng-class="{error: myForm.number.$error.number && !myForm.number.$pristine}" 
-      ng-model="item.number" 
-      number>
-    <!-- <span ng-show="myForm.number.$error.required && !myForm.number.$pristine" class="text-danger">
-        Required</span> -->
-    <span ng-show="myForm.number.$error.number" class="text-danger">
-        Not a Number</span>
-  </div>
 
   <div class="control-group" >
     <label>Email??!</label>
@@ -39,5 +27,5 @@
   <br>
   <a href="#/" class="btn btn-default">Cancel</a>
   <button ng-click="save()" ng-disabled="myForm.$invalid" class="btn btn-primary">Save</button>
-  <button ng-click="destroy()" ng-show="item.$remove" class="btn btn-danger">Delete</button>
+  <button ng-click="destroy()" ng-show="item.$id" class="btn btn-danger">Delete</button>
 </form>
