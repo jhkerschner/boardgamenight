@@ -14,7 +14,11 @@
   <div class="container main">
     <div class="row">
       <div class="col-md-4">
-        <h2>User Listing</h2>
+        <h1 ng-controller="TimerCtrl">
+          Date: <input ng-model="scheduledDate"> <hr/>
+          BoardgameNight Commences in:<br> <span my-current-time="scheduledDate"></span>
+        </h1>
+        <h2>The Honored Participants</h2>
         <div ng-view></div>
       </div>
     </div>
