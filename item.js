@@ -59,7 +59,7 @@ angular.module('item', ['ngRoute', 'firebase'])
     };
 })
 .controller('TimerCtrl', ['$scope', function($scope) {
-  $scope.scheduledDate = new Date("Aug 28 2014 5:00 PM");
+  $scope.scheduledDate = new Date("Oct 13 2014 5:00 PM");
 }])
 .directive('myCurrentTime', ['$interval', 'dateFilter', function($interval, dateFilter) {
 
