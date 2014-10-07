@@ -1,20 +1,43 @@
-<input type="text" ng-model="search" class="form-control" placeholder="Search">
+<h2>The Honored Participants</h2>
+
 <table class="table table-striped">
   <thead>
   <tr>
     <th>Name</th>
     <th>Bio</th>
-    <th>email</th>
+    <th>Endorsing</th>
     <th><a href="#/new"><i class="glyphicon glyphicon-plus"></i></a></th>
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="item in items | filter:search | orderBy:'name'">
+  <tr ng-repeat="item in items | orderBy:'name'">
     <td>{{item.name}}</td>
     <td>{{item.description}}</td>
-    <td>{{item.email}}</td>
+    <td>{{item.choice}}</td>
     <td>
       <a href="#/edit/{{item.$id}}"><i class="glyphicon glyphicon-pencil"></i></a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<h2>The Games</h2>
+<input type="text" ng-model="search" class="form-control" placeholder="Search">
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Game</th>
+    <th>Link</th>
+    <th>Vote Count</th>
+    <th><a href="#/addGame"><i class="glyphicon glyphicon-plus"></i></a></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="game in games | filter:search | orderBy:'name'">
+    <td>{{game.name}}</td>
+    <td>{{game.link}}</td>
+    <td>{{game.voteCount}}</td>
+    <td>
+      <a href="#/editGame/{{game.$id}}"><i class="glyphicon glyphicon-pencil"></i></a>
     </td>
   </tr>
   </tbody>

@@ -1,0 +1,24 @@
+<h2>Add a Game (you will be judged)</h2>
+<form name="gameForm">
+
+  <div class="control-group" >
+    <label>Name</label>
+    <input type="text" name="game" class="form-control" 
+      ng-class="{error: gameForm.name.$invalid && !gameForm.name.$pristine}" 
+      ng-model="game.name" 
+      required >
+    <span ng-show="gameForm.name.$error.required && !gameForm.name.$pristine" class="text-danger">
+        Required</span>
+  </div>
+
+  <div class="control-group" >
+    <label>Link</label>
+    <input type="text" name="link" class="form-control" 
+      ng-class="{error: gameForm.link.$invalid && !gameForm.link.$pristine}"
+      ng-model="game.link">
+  </div>
+ 
+  <a href="#/" class="btn btn-default">Cancel</a>
+  <button ng-click="save()" ng-disabled="gameForm.$invalid" class="btn btn-primary">Save</button>
+  <button ng-click="destroy()" ng-show="game.$id" class="btn btn-danger">Delete</button>
+</form>

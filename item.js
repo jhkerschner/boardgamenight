@@ -1,9 +1,13 @@
 angular.module('item', ['ngRoute', 'firebase'])
  
-.value('fbURL', 'https://boardgamenight.firebaseio.com/')
+.value('itemsURL', 'https://boardgamenight.firebaseio.com/items')
+.value('gamesURL', 'https://boardgamenight.firebaseio.com/games')
  
-.factory('Items', function($firebase, fbURL) {
-  return $firebase(new Firebase(fbURL)).$asArray();
+.factory('Items', function($firebase, itemsURL) {
+  return $firebase(new Firebase(itemsURL)).$asArray();
+})
+.factory('Games', function($firebase, gamesURL) {
+  return $firebase(new Firebase(gamesURL)).$asArray();
 })
  
 .config(function($routeProvider) {
@@ -20,13 +24,22 @@ angular.module('item', ['ngRoute', 'firebase'])
       controller:'CreateCtrl',
       templateUrl:'detail.html'
     })
+    .when('/addGame',{
+      controller:'GameCtrl',
+      templateUrl:'gamedetail.html'
+    })
+    .when('/editGame/:gameId',{
+      controller: 'GameEditCtrl',
+      templateUrl:'gamedetail.html'
+    })
     .otherwise({
       redirectTo:'/'
     });
 })
 
-.controller('ListCtrl', function($scope, Items) {
+.controller('ListCtrl', function($scope, Items, Games) {
   $scope.items = Items;
+  $scope.games = Games;
 })
  
 .controller('CreateCtrl', function($scope, $location, $timeout, Items) {
@@ -38,10 +51,10 @@ angular.module('item', ['ngRoute', 'firebase'])
 })
 
 .controller('EditCtrl',
-  function($scope, $location, $routeParams, Items) {
+  function($scope, $location, $routeParams, Items, Games) {
     var itemId = $routeParams.itemId,
         itemIndex;
-
+    $scope.games = Games;
     $scope.items = Items;
     itemIndex = $scope.items.$indexFor(itemId);
     $scope.item = $scope.items[itemIndex];
@@ -53,13 +66,45 @@ angular.module('item', ['ngRoute', 'firebase'])
     };
 
     $scope.save = function() {
+        console.log($scope.item);
+        $scope.item.choice = $scope.item.choice.name;
         $scope.items.$save($scope.item).then(function(data) {
            $location.path('/');
         });
     };
 })
+
+.controller('GameCtrl', function($scope, $location, $routeParams, Games) {
+  $scope.save = function() {
+    Games.$add($scope.game).then(function(data) {
+      $location.path('/');
+    });
+  };
+})
+
+.controller('GameEditCtrl', function($scope, $location, $routeParams, Games) {
+    var gameId = $routeParams.gameId,
+        gameIndex;
+
+    $scope.games = Games;
+    gameIndex = $scope.games.$indexFor(gameId);
+    $scope.game = $scope.games[gameIndex];
+
+    $scope.destroy = function() {
+        $scope.games.$remove($scope.game).then(function(data) {
+            $location.path('/');
+        });
+    };
+
+    $scope.save = function() {
+        $scope.games.$save($scope.game).then(function(data) {
+           $location.path('/');
+        });
+    };
+})
+
 .controller('TimerCtrl', ['$scope', function($scope) {
-  $scope.scheduledDate = new Date("Oct 13 2014 5:00 PM");
+  $scope.scheduledDate = new Date('Oct 15 2014 5:00 pm');
 }])
 .directive('myCurrentTime', ['$interval', 'dateFilter', function($interval, dateFilter) {
 
@@ -104,43 +149,3 @@ angular.module('item', ['ngRoute', 'firebase'])
     link: link
   };
 }]);
-// .controller('TimerCtrl', ['$scope', function($scope) {
-//   $scope.timer = function(){
-//     // set the date we're counting down to
-//     var target_date = new Date("Aug 15, 2019").getTime();
-     
-//     // variables for time units
-//     var days, hours, minutes, seconds;
-     
-//     // get tag element
-//     var countdown = document.getElementById("countdown");
-     
-//     // update the tag with id "countdown" every 1 second
-//     setInterval(function () {
-     
-//         // find the amount of "seconds" between now and target
-//         var current_date = new Date().getTime();
-//         var seconds_left = (target_date - current_date) / 1000;
-     
-//         // do some time calculations
-//         days = parseInt(seconds_left / 86400);
-//         seconds_left = seconds_left % 86400;
-         
-//         hours = parseInt(seconds_left / 3600);
-//         seconds_left = seconds_left % 3600;
-         
-//         minutes = parseInt(seconds_left / 60);
-//         seconds = parseInt(seconds_left % 60);
-         
-//         // format countdown string + set tag value
-//         countdown.innerHTML = days + "d, " + hours + "h, "
-//         + minutes + "m, " + seconds + "s";  
-     
-//     }, 1000);
-//   };
-// }])
-// .directive('timer', function() {
-//   return {
-//     template: 'Countdown to GameboardNight: {{timer}}'
-//   };
-// });

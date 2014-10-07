@@ -1,7 +1,7 @@
+<h2>Add or Edit(please only edit yourself, (I'm too <del>lazy</del> <del>busy</del> dumb to add users to this thing)</h2>
 <form name="myForm">
   <!-- When using name attributes in combination with directives you can quickly do form validation without writing any special javascript -->
-  Is the form valid yet? {{myForm.$invalid ? "no" : "yes"}}
-  <div class="control-group" >
+  <div class="control-group">
     <label>Name</label>
     <input type="text" name="name" class="form-control" 
       ng-class="{error: myForm.name.$invalid && !myForm.name.$pristine}" 
@@ -11,14 +11,11 @@
         Required</span>
   </div>
 
-  <div class="control-group" >
-    <label>Email??!</label>
-    <input type="email" name="email" class="form-control" 
-      ng-class="{error: myForm.email.$invalid && !myForm.email.$pristine}"
-      ng-model="item.email">
-    <span ng-show="myForm.email.$error.email && !myForm.email.$pristine" class="text-danger">
-        That doesn't appear to be a valid email</span>
-
+  <div class="control-group">
+    <label>Endorsing</label>
+    <select name="choice" class="form-control" ng-model="item.choice"
+      ng-options="game.name for game in games">
+    </select>
   </div>
  
   <label>Bio</label>
