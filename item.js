@@ -1,4 +1,4 @@
-angular.module('item', ['ngRoute', 'firebase'])
+var item = angular.module('item', ['ngRoute', 'firebase'])
  
 .value('itemsURL', 'https://boardgamenight.firebaseio.com/items')
 .value('gamesURL', 'https://boardgamenight.firebaseio.com/games')
@@ -86,9 +86,18 @@ angular.module('item', ['ngRoute', 'firebase'])
     var gameId = $routeParams.gameId,
         gameIndex;
 
+
+
     $scope.games = Games;
     gameIndex = $scope.games.$indexFor(gameId);
     $scope.game = $scope.games[gameIndex];
+
+    $scope.monopoly = function(){
+      console.log("hello")
+      if ($scope.game.name == 'monopoly'){
+        return true;
+      }
+    };
 
     $scope.destroy = function() {
         $scope.games.$remove($scope.game).then(function(data) {
@@ -102,6 +111,8 @@ angular.module('item', ['ngRoute', 'firebase'])
         });
     };
 })
+
+
 
 .controller('TimerCtrl', ['$scope', function($scope) {
   $scope.scheduledDate = new Date('Oct 15 2014 5:00 pm');
@@ -149,3 +160,28 @@ angular.module('item', ['ngRoute', 'firebase'])
     link: link
   };
 }]);
+
+//Custom Form Validation
+
+var MONOPOLY_REGEXP = /monopoly/i;
+
+item.directive('monopoly', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$parsers.unshift(function(viewValue) {
+        console.log(viewValue)
+        if (MONOPOLY_REGEXP.test(viewValue)) {
+          ctrl.$setValidity('monopoly', false);
+          return undefined;
+          // it is monopoly, return undefined (no model update)
+        } else {
+          ctrl.$setValidity('monopoly', true);
+          return viewValue;
+          // it's not valid
+          
+        }
+      });
+    }
+  };
+});

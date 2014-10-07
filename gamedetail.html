@@ -4,11 +4,14 @@
   <div class="control-group" >
     <label>Name</label>
     <input type="text" name="game" class="form-control" 
-      ng-class="{error: gameForm.name.$invalid && !gameForm.name.$pristine}" 
+      ng-class="{error: gameForm.name.$error.monopoly && !gameForm.name.$pristine}" 
       ng-model="game.name" 
-      required >
-    <span ng-show="gameForm.name.$error.required && !gameForm.name.$pristine" class="text-danger">
-        Required</span>
+      required
+      monopoly >
+    <!-- <span ng-show="gameForm.name.$error.required && !gameForm.name.$pristine" class="text-danger">
+        Required</span> -->
+     <span ng-show="gameForm.game.$error.monopoly" class="text-danger">
+        Not a valid game.</span>
   </div>
 
   <div class="control-group" >
