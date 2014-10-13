@@ -42,8 +42,10 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
   $scope.games = Games;
 })
  
-.controller('CreateCtrl', function($scope, $location, $timeout, Items) {
+.controller('CreateCtrl', function($scope, $location, $timeout, Items, Games) {
+  $scope.games = Games;
   $scope.save = function() {
+    $scope.item.choice = $scope.item.choice.name || "";
     Items.$add($scope.item).then(function(data) {
       $location.path('/');
     });
@@ -66,8 +68,8 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
     };
 
     $scope.save = function() {
-        console.log($scope.item);
-        $scope.item.choice = $scope.item.choice.name;
+
+        $scope.item.choice = $scope.item.choice.name || "";
         $scope.items.$save($scope.item).then(function(data) {
            $location.path('/');
         });

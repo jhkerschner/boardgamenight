@@ -1,4 +1,5 @@
-<h2>Add or Edit(please only edit yourself, (I'm too <del>lazy</del> <del>busy</del> dumb to add users to this thing)</h2>
+<h2 ng-show="!item.$id">Add</h2>
+<h2 ng-show="item.$id">Edit</h2>
 <form name="myForm">
   <!-- When using name attributes in combination with directives you can quickly do form validation without writing any special javascript -->
   <div class="control-group">
