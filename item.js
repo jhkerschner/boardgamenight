@@ -37,16 +37,37 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
     });
 })
 
-.controller('ListCtrl', function($scope, Items, Games) {
+.controller('ListCtrl', ['$scope', 'Items', 'Games', function($scope, Items, Games) {
   $scope.items = Items;
   $scope.games = Games;
+}])
+
+.directive('myCalc', function(){
+  function link(scope) {
+    scope.game.endorsementCount = 0;
+    // console.log(scope.game.name);
+      for(var i=0; i < scope.$parent.items.length; i++){
+        console.log(scope.game.name +"=?"+ scope.$parent.items[i].choice);
+        if (scope.game.name == scope.$parent.items[i].choice){
+          scope.game.endorsementCount ++;
+          console.log(scope.game.endorsementCount);
+          console.log("one vote for: "+ scope.game.name);
+        }
+      }
+  }
+  return {
+    link: link
+  };
 })
  
 .controller('CreateCtrl', function($scope, $location, $timeout, Items, Games) {
   $scope.games = Games;
+
   $scope.save = function() {
+    console.log($scope.item.choice);
     $scope.item.choice = $scope.item.choice.name || "";
     Items.$add($scope.item).then(function(data) {
+      
       $location.path('/');
     });
   };
@@ -62,22 +83,23 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
     $scope.item = $scope.items[itemIndex];
 
     $scope.destroy = function() {
-        $scope.items.$remove($scope.item).then(function(data) {
-            $location.path('/');
-        });
+      $scope.items.$remove($scope.item).then(function(data) {
+          $location.path('/');
+      });
     };
 
     $scope.save = function() {
-
-        $scope.item.choice = $scope.item.choice.name || "";
-        $scope.items.$save($scope.item).then(function(data) {
-           $location.path('/');
-        });
+      console.log($scope.item.choice);
+      $scope.item.choice = $scope.item.choice.name || "";
+      $scope.items.$save($scope.item).then(function(data) {
+         $location.path('/');
+      });
     };
 })
 
 .controller('GameCtrl', function($scope, $location, $routeParams, Games) {
   $scope.save = function() {
+    $scope.game.endorsementCount = 0;
     Games.$add($scope.game).then(function(data) {
       $location.path('/');
     });
@@ -109,12 +131,11 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
 
     $scope.save = function() {
         $scope.games.$save($scope.game).then(function(data) {
-           $location.path('/');
+          
+          $location.path('/');
         });
     };
 })
-
-
 
 .controller('TimerCtrl', ['$scope', function($scope) {
   $scope.scheduledDate = new Date('Oct 15 2014 5:00 pm');

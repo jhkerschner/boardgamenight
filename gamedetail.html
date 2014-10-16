@@ -19,6 +19,9 @@
       ng-class="{error: gameForm.link.$invalid && !gameForm.link.$pristine}"
       ng-model="game.link">
   </div>
+  <div class="control-group" >
+    {{game.voteCount}}
+  </div>
  
   <a href="#/" class="btn btn-default">Cancel</a>
   <button ng-click="save()" ng-disabled="gameForm.$invalid" class="btn btn-primary">Save</button>
