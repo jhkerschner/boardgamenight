@@ -60,7 +60,6 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
   $scope.games = Games;
 
   $scope.save = function() {
-    console.log($scope.item.choice);
     $scope.item.choice = $scope.item.choice.name || "";
     Items.$add($scope.item).then(function(data) {
       
@@ -75,8 +74,7 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
         itemIndex;
     $scope.games = Games;
     $scope.items = Items;
-    itemIndex = $scope.items.$indexFor(itemId);
-    $scope.item = $scope.items[itemIndex];
+    $scope.item = $scope.items.$getRecord(itemId);
 
     $scope.destroy = function() {
       $scope.items.$remove($scope.item).then(function(data) {
@@ -85,7 +83,7 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
     };
 
     $scope.save = function() {
-      console.log($scope.item.choice);
+
       $scope.item.choice = $scope.item.choice.name || "";
       $scope.items.$save($scope.item).then(function(data) {
          $location.path('/');
@@ -113,7 +111,6 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
     $scope.game = $scope.games[gameIndex];
 
     $scope.monopoly = function(){
-      console.log("hello")
       if ($scope.game.name == 'monopoly'){
         return true;
       }
@@ -189,7 +186,6 @@ item.directive('monopoly', function() {
     require: 'ngModel',
     link: function(scope, elm, attrs, ctrl) {
       ctrl.$parsers.unshift(function(viewValue) {
-        console.log(viewValue)
         if (MONOPOLY_REGEXP.test(viewValue)) {
           ctrl.$setValidity('monopoly', false);
           return undefined;
