@@ -45,15 +45,11 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
 .directive('myCalc', function(){
   function link(scope) {
     scope.game.endorsementCount = 0;
-    // console.log(scope.game.name);
-      for(var i=0; i < scope.$parent.items.length; i++){
-        console.log(scope.game.name +"=?"+ scope.$parent.items[i].choice);
-        if (scope.game.name == scope.$parent.items[i].choice){
-          scope.game.endorsementCount ++;
-          console.log(scope.game.endorsementCount);
-          console.log("one vote for: "+ scope.game.name);
-        }
+    for(var i=0; i < scope.$parent.items.length; i++){
+      if (scope.game.name == scope.$parent.items[i].choice){
+        scope.game.endorsementCount ++;
       }
+    }
   }
   return {
     link: link
