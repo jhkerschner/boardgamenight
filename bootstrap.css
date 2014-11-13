@@ -4,16 +4,7 @@
 
 .main{
   padding-top: 80px;
-}
-.carousel-inner{
-  height:305px;
-  background-color: #000;
-}
-.carousel-inner > .item{
-  height:305px;
-}
-.slideshow-form{
-  padding-top: 30px;
+  max-width:720px;
 }
 input.error{
   border-color:red;

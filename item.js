@@ -9,7 +9,6 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
 .factory('Games', function($firebase, gamesURL) {
   return $firebase(new Firebase(gamesURL)).$asArray();
 })
- 
 .config(function($routeProvider) {
   $routeProvider
     .when('/', {
@@ -40,6 +39,7 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
 .controller('ListCtrl', ['$scope', 'Items', 'Games', function($scope, Items, Games) {
   $scope.items = Items;
   $scope.games = Games;
+  console.log($scope.moreGames);
 }])
 
 .directive('myCalc', function(){

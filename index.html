@@ -11,18 +11,13 @@
     <script src="item.js"></script>
   </head>
   <body>
-  <div class="container main">
-    <div class="row">
-      <div class="col-md-4">
-        <h1 ng-controller="TimerCtrl">
-          BoardgameNight: <br>{{ scheduledDate | date:'MM/dd @ h:mma'}}
-          <hr/>
-          Unnecessary countdown timer:<br> <span my-current-time="scheduledDate"></span>
-        </h1>
-        
-        <div ng-view></div>
-      </div>
-      </div>
+    <div class="container main">
+      <h1 ng-controller="TimerCtrl">
+        BoardgameNight: <br>{{ scheduledDate | date:'MM/dd @ h:mma'}}
+        <hr/>
+        Unnecessary countdown timer:<br> <span my-current-time="scheduledDate"></span>
+      </h1>
+      <div ng-view></div>
     </div>
   </body>
 </html>
