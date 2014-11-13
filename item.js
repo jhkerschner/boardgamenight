@@ -60,9 +60,12 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
   $scope.games = Games;
 
   $scope.save = function() {
-    $scope.item.choice = $scope.item.choice.name || "";
+    if($scope.item.choice != null){
+      $scope.item.choice = $scope.item.choice.name;
+    }else{
+      $scope.item.choice = "";
+    }
     Items.$add($scope.item).then(function(data) {
-      
       $location.path('/');
     });
   };
@@ -131,7 +134,7 @@ var item = angular.module('item', ['ngRoute', 'firebase'])
 })
 
 .controller('TimerCtrl', ['$scope', function($scope) {
-  $scope.scheduledDate = new Date('Oct 15 2014 5:00 pm');
+  $scope.scheduledDate = new Date('Nov 21 2014 5:00 pm');
 }])
 .directive('myCurrentTime', ['$interval', 'dateFilter', function($interval, dateFilter) {
 

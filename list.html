@@ -34,7 +34,7 @@
   <tbody>
   <tr ng-repeat="game in games | filter:search | orderBy:'endorsementCount':true">
     <td>{{game.name}}</td>
-    <td>{{game.link}}</td>
+    <td><a href="{{game.link}}" target="_blank"><i class="glyphicon glyphicon-new-window"></i></a></td>
     <td my-calc>{{game.endorsementCount}}</td>
     <td>
       <a href="#/editGame/{{game.$id}}"><i class="glyphicon glyphicon-pencil"></i></a>
