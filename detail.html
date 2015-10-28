@@ -7,7 +7,7 @@
     <input type="text" name="name" class="form-control" 
       ng-class="{error: myForm.name.$invalid && !myForm.name.$pristine}" 
       ng-model="item.name" 
-      required >
+      required />
     <span ng-show="myForm.name.$error.required && !myForm.name.$pristine" class="text-danger">
         Required</span>
   </div>
