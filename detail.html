@@ -3,7 +3,7 @@
 <form name="myForm">
   <!-- When using name attributes in combination with directives you can quickly do form validation without writing any special javascript -->
   <div class="control-group">
-    <label>Name</label>
+    <label>Full Name</label>
     <input type="text" name="name" class="form-control" 
       ng-class="{error: myForm.name.$invalid && !myForm.name.$pristine}" 
       ng-model="item.name" 
